@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Tűzhegy Varázslója</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <header>
+
+
+    
+    <h1>🔥 A Tűzhegy Varázslója</h1>
+    <p>KALANDJÁTÉK · JACKSON & LIVINGSTONE</p>
+  </header>
+  <!-- 1. KÉPERNYŐ: Bevezetés -->
+  <div id="kepernyo-bevezeto" class="screen aktiv">
+    <div class="setup-doboz">
+      <h2>Üdvözöllek, Kalandor!</h2>
+      <p>
+        Vakmerő kalandorként indulsz el a titokzatos Tűzhegy felé, ahol Zagor varázsló rejtegeti
+        legendás kincsét. Kattints a gombra, és kezdd el a kalandot!
+      </p>
+      <button class="gomb gomb-tamadas" onclick="kepernyo('kepernyo-dob')">⚔ Kaland Kezdése</button>
+    </div>
+  </div>
+
+  <!-- 2. KÉPERNYŐ: Jellemzők dobása -->
+  <div id="kepernyo-dob" class="screen">
+    <div class="setup-doboz">
+      <h2>Jellemzők meghatározása</h2>
+      <p>Dobj kockával a kezdő értékeidért!</p>
+
+      <div class="dob-sor">
+        <div class="dob-mezo">
+          <div class="cimke">ÜGYESSÉG</div>
+          <div class="ertek" id="dob-ugyesseg">?</div>
+          <div class="keplet">1k6 + 6</div>
+        </div>
+        <div class="dob-mezo">
+          <div class="cimke">ÉLETERŐ</div>
+          <div class="ertek" id="dob-eletero">?</div>
+          <div class="keplet">2k6 + 12</div>
+        </div>
+        <div class="dob-mezo">
+          <div class="cimke">SZERENCSE</div>
+          <div class="ertek" id="dob-szerencse">?</div>
+          <div class="keplet">1k6 + 6</div>
+        </div>
+      </div>
+
+      <button class="gomb gomb-tamadas" id="gomb-dob" onclick="jellemzokDobasa()">🎲 Dobás!</button>
+      <button class="gomb gomb-masodlagos" id="gomb-elfogad" onclick="kepernyo('kepernyo-ital')" style="display:none; margin-left:8px;">✓ Elfogadás</button>
+    </div>
+  </div>
+
+  <!-- 3. KÉPERNYŐ: Ital választás -->
+  <div id="kepernyo-ital" class="screen">
+    <div class="setup-doboz">
+      <h2>Válassz Varázsitalt!</h2>
+      <p>Egy palackot vihetsz magaddal, benne 2 adagnyi itallal. Válassz bölcsen!</p>
+
+      <div class="italok">
+        <div class="ital-gomb" onclick="italValaszt('ugyesseg')" id="ital-ugyesseg">
+          <div class="ikon">⚔️</div>
+          <div class="nev">ÜGYESSÉG ITALA</div>
+          <div class="leiras">Visszaállítja Ügyességed</div>
+        </div>
+        <div class="ital-gomb" onclick="italValaszt('eletero')" id="ital-eletero">
+          <div class="ikon">❤️</div>
+          <div class="nev">ERŐ ITALA</div>
+          <div class="leiras">Visszaállítja Életerőd</div>
+        </div>
+        <div class="ital-gomb" onclick="italValaszt('szerencse')" id="ital-szerencse">
+          <div class="ikon">🍀</div>
+          <div class="nev">SZERENCSE ITALA</div>
+          <div class="leiras">Visszaállítja Szerencséd +1-gyel</div>
+        </div>
+      </div>
+
+      <button class="gomb gomb-tamadas" id="gomb-kezdes" onclick="jatekKezdes()" style="display:none; margin-top:8px;">⚔ Kaland Megkezdése!</button>
+    </div>
+  </div>
+
+  <!-- 4. KÉPERNYŐ: Játék -->
+  <div id="kepernyo-jatek" class="screen">
+
+    <!-- Statisztika sáv -->
+    <div id="stat-sav">
+      <div class="stat-doboz ugyesseg">
+        <div class="stat-cimke">Ügyesség</div>
+        <div>
+          <span class="stat-ertek" id="stat-ugyesseg">0</span>
+          <span class="stat-max" id="stat-ugyesseg-max">/0</span>
+        </div>
+      </div>
+      <div class="stat-doboz eletero">
+        <div class="stat-cimke">Életerő</div>
+        <div>
+          <span class="stat-ertek" id="stat-eletero">0</span>
+          <span class="stat-max" id="stat-eletero-max">/0</span>
+        </div>
+      </div>
+      <div class="stat-doboz szerencse">
+        <div class="stat-cimke">Szerencse</div>
+        <div>
+          <span class="stat-ertek" id="stat-szerencse">0</span>
+          <span class="stat-max" id="stat-szerencse-max">/0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Felszerelés sor -->
+    <div id="felszereles">
+      <div class="badge">
+        🍖 Étel: <span class="szam" id="inv-etel">10</span>
+        <button class="kis-gomb" onclick="eszik()">Étkezés</button>
+      </div>
+      <div class="badge">
+        🧪 <span id="ital-felirat">Ital:</span> <span class="szam" id="inv-ital">2</span>
+        <button class="kis-gomb" onclick="italIszik()">Korty</button>
+      </div>
+      <div class="badge">
+        💰 Arany: <span class="szam" id="inv-arany">0</span>
+      </div>
+      <div class="badge" style="margin-left:auto; font-size:0.75rem; color:#555;">
+        §<span id="aktualis-para">1</span>
+      </div>
+    </div>
+
+    <!-- Bekezdés megjelenítő -->
+    <div id="bekezdés-megjelenitő"></div>
+
+    <!-- Harc panel -->
+    <div id="harc-panel" style="display:none;">
+      <h3>⚔ Harc</h3>
+
+      <div class="harc-allasok">
+        <div class="harc-karakter">
+          <h4>TE</h4>
+          <div class="harc-eletero" id="harc-jatekos-elet">0 ÉL</div>
+          <div class="harc-ugyesseg">Ügyesség: <span id="harc-jatekos-ugy">0</span></div>
+        </div>
+        <div class="vs">VS</div>
+        <div class="harc-karakter">
+          <h4 id="harc-ellenfél-nev">Ellenfél</h4>
+          <div class="harc-eletero" id="harc-ellenfél-elet">0 ÉL</div>
+          <div class="harc-ugyesseg">Ügyesség: <span id="harc-ellenfél-ugy">0</span></div>
+        </div>
+      </div>
+
+      <div class="kockak">
+        <div class="kocka" id="k-j1">-</div>
+        <div class="kocka" id="k-j2">-</div>
+        <span style="align-self:center; color:#555; padding:0 8px;">vs</span>
+        <div class="kocka" id="k-e1">-</div>
+        <div class="kocka" id="k-e2">-</div>
+      </div>
+
+      <div class="tamadoero-sor">
+        <div>Te: <span id="te-tamadoero">-</span></div>
+        <div>Ellenfél: <span id="e-tamadoero">-</span></div>
+      </div>
+
+      <div id="harc-naplo"></div>
+
+      <div class="harc-gombok">
+        <button class="gomb gomb-tamadas" id="gomb-tamadas" onclick="harciKor()">⚔ Támadás</button>
+        <button class="gomb gomb-szerencse" id="gomb-harc-szerencse" onclick="szerencseHarcban()" style="display:none;">🍀 Szerencse</button>
+        <button class="gomb gomb-masodlagos" id="gomb-menekules" onclick="menekules()" style="display:none;">🏃 Menekülés</button>
+        <button class="gomb gomb-masodlagos" id="gomb-tovabb-harc" onclick="harciGyozelem()" style="display:none;">→ Tovább</button>
+      </div>
+    </div>
+
+    <!-- Szerencse próba panel -->
+    <div id="szerencse-panel" style="display:none;">
+      <h3>🍀 Szerencse Próba</h3>
+      <p>Dobj 2 kockával! Ha az eredmény ≤ Szerencse pontod, szerencsés vagy!</p>
+
+      <div class="kockak" style="justify-content:center;">
+        <div class="kocka" id="sz-k1" style="width:44px;height:44px;font-size:1.2rem;">-</div>
+        <div class="kocka" id="sz-k2" style="width:44px;height:44px;font-size:1.2rem;">-</div>
+      </div>
+
+      <div id="szerencse-eredmeny" style="margin:12px 0; font-size:1rem; min-height:24px;"></div>
+
+      <button class="gomb gomb-szerencse" id="gomb-szerencse-dob" onclick="szerencsePróba()">🎲 Dobás</button>
+    </div>
+
+  </div>
+
+  <!-- 5. KÉPERNYŐ: Halál -->
+  <div id="kepernyo-halal" class="screen">
+    <div class="vege-doboz vesztes">
+      <h2>💀 Kalandod Véget Ért</h2>
+      <p>Életerőd elfogy. A Tűzhegy legyőzött ezúttal — de a kincs még mindig ott vár...</p>
+      <p id="halal-info" style="font-size:0.85rem; color:#555;"></p>
+      <button class="gomb gomb-tamadas" onclick="ujrakezd()" style="margin-top:8px;">⚔ Új Kaland</button>
+    </div>
+  </div>
+
+  <!-- 6. KÉPERNYŐ: Győzelem -->
+  <div id="kepernyo-gyozelem" class="screen">
+    <div class="vege-doboz gyozelem">
+      <h2>🏆 Győzelem!</h2>
+      <p>
+        A Tűzhegy Varázslója elesett! Kincse a tiéd: ezer arany, ékszerek, gyémántok, rubinok —
+        és a varázsló mágikus könyve, amely végtelen hatalmat ad neked.
+      </p>
+      <p style="color:#ffb347;">
+        Ügyesség: <span id="gy-ugy"></span> · 
+        Életerő: <span id="gy-elet"></span> · 
+        Szerencse: <span id="gy-szer"></span>
+      </p>
+      <button class="gomb gomb-tamadas" onclick="ujrakezd()" style="margin-top:16px;">⚔ Új Kaland</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Értesítés -->
+<div id="értesités"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

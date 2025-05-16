@@ -1,0 +1,551 @@
+/* ===== ALAP ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #111;
+  color: #e8d5a3;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== FEJLÉC ===== */
+header {
+  text-align: center;
+  padding: 24px 0 16px;
+  border-bottom: 2px solid #8b2500;
+  margin-bottom: 24px;
+}
+
+header h1 {
+  font-size: 1.9rem;
+  color: #ffb347;
+  letter-spacing: 2px;
+}
+
+header p {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 6px;
+  letter-spacing: 3px;
+}
+
+/* ===== KÉPERNYŐK ===== */
+.screen {
+  display: none;
+}
+
+.screen.aktiv {
+  display: block;
+}
+
+/* ===== STATISZTIKA SÁV ===== */
+#stat-sav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stat-doboz {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.stat-cimke {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.stat-ertek {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.stat-doboz.ugyesseg .stat-ertek { color: #6ab0e0; }
+.stat-doboz.eletero .stat-ertek  { color: #e06060; }
+.stat-doboz.szerencse .stat-ertek { color: #60c070; }
+
+.stat-max {
+  font-size: 0.75rem;
+  color: #555;
+}
+
+/* ===== FELSZERELÉS SOR ===== */
+#felszereles {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  align-items: center;
+}
+
+.badge {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge span.szam {
+  color: #ffb347;
+  font-weight: bold;
+}
+
+.kis-gomb {
+  background: #222;
+  border: 1px solid #444;
+  color: #e8d5a3;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.kis-gomb:hover {
+  border-color: #8b2500;
+  color: #ffb347;
+}
+
+/* ===== BEKEZDÉS ===== */
+.bekezdés-doboz {
+  background: #0e0e0e;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.bekezdés-fejléc {
+  background: #1a1a1a;
+  padding: 8px 18px;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: #666;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.bekezdés-fejléc span {
+  color: #ffb347;
+  font-size: 0.9rem;
+  margin-right: 8px;
+}
+
+.bekezdés-szöveg {
+  padding: 22px 24px;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.bekezdés-szöveg p {
+  margin-bottom: 12px;
+}
+
+/* Kattintható lapozz link */
+.lapozz-link {
+  color: #ffb347;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.lapozz-link:hover {
+  color: #fff;
+}
+
+/* ===== ELLENFELEK TÁBLA ===== */
+.ellenfél-blokk {
+  margin: 0 24px 4px;
+  background: rgba(139, 37, 0, 0.1);
+  border-left: 3px solid #8b2500;
+  border-radius: 4px;
+  padding: 14px 18px;
+}
+
+.ellenfél-blokk h4 {
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  color: #ffb347;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.ellenfél-sor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.95rem;
+}
+
+.ellenfél-sor:last-child {
+  border-bottom: none;
+}
+
+.ellenfél-nev {
+  flex: 1;
+}
+
+.ellenfél-stat {
+  background: #111;
+  border-radius: 4px;
+  padding: 3px 10px;
+  text-align: center;
+  min-width: 58px;
+  font-size: 0.75rem;
+}
+
+.ellenfél-stat .stat-szam {
+  font-size: 1.1rem;
+  font-weight: bold;
+  display: block;
+}
+
+.ellenfél-stat.ugy .stat-szam { color: #6ab0e0; }
+.ellenfél-stat.elet .stat-szam { color: #e06060; }
+
+/* ===== VÁLASZTÓ GOMBOK ===== */
+.valasztok {
+  padding: 4px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.valaszt-gomb {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #e8d5a3;
+  padding: 12px 18px;
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.valaszt-gomb:hover {
+  background: rgba(139, 37, 0, 0.25);
+  border-color: #8b2500;
+  color: #ffb347;
+}
+
+/* ===== GOMBOK ===== */
+.gomb {
+  padding: 10px 22px;
+  font-family: Georgia, serif;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: opacity 0.15s;
+}
+
+.gomb:hover { opacity: 0.85; }
+.gomb:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.gomb-tamadas  { background: #8b2500; color: #fff; }
+.gomb-szerencse { background: #1a5c2a; color: #fff; }
+.gomb-masodlagos { background: #222; border: 1px solid #444; color: #e8d5a3; }
+.gomb-veszelyes { background: #3a0000; border: 1px solid #e06060; color: #e06060; }
+
+/* ===== HARC PANEL ===== */
+#harc-panel {
+  background: #0e0e0e;
+  border: 1px solid #5a1000;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+#harc-panel h3 {
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  color: #e06060;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.harc-allasok {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.harc-karakter {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.harc-karakter h4 {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.harc-eletero {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #e06060;
+}
+
+.harc-ugyesseg {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.vs {
+  font-size: 1.2rem;
+  color: #ffb347;
+  font-weight: bold;
+}
+
+/* Kockák */
+.kockak {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.kocka {
+  width: 36px;
+  height: 36px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffb347;
+}
+
+.tamadoero-sor {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.tamadoero-sor span {
+  color: #ffb347;
+  font-weight: bold;
+}
+
+/* Harci napló */
+#harc-naplo {
+  background: #080808;
+  border: 1px solid #1a1a1a;
+  border-radius: 4px;
+  padding: 10px 14px;
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.naplo-sor { margin-bottom: 3px; }
+.naplo-sor.jo  { color: #60c070; }
+.naplo-sor.rossz { color: #e06060; }
+.naplo-sor.info  { color: #888; }
+
+.harc-gombok {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ===== SZERENCSE PANEL ===== */
+#szerencse-panel {
+  background: #0a120a;
+  border: 1px solid #1a5c2a;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+#szerencse-panel h3 {
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  color: #60c070;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+#szerencse-panel p {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 14px;
+}
+
+/* ===== SETUP KÉPERNYŐ ===== */
+.setup-doboz {
+  background: #0e0e0e;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 32px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.setup-doboz h2 {
+  color: #ffb347;
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+}
+
+.setup-doboz p {
+  color: #999;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dob-sor {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.dob-mezo {
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 14px 20px;
+  min-width: 120px;
+}
+
+.dob-mezo .cimke {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.dob-mezo .ertek {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffb347;
+}
+
+.dob-mezo .keplet {
+  font-size: 0.7rem;
+  color: #444;
+  margin-top: 4px;
+}
+
+/* Ital választó */
+.italok {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.ital-gomb {
+  background: #111;
+  border: 2px solid #333;
+  border-radius: 6px;
+  padding: 16px;
+  cursor: pointer;
+  min-width: 150px;
+  text-align: center;
+  transition: border-color 0.15s;
+}
+
+.ital-gomb:hover, .ital-gomb.kivalasztott {
+  border-color: #ffb347;
+}
+
+.ital-gomb .ikon { font-size: 1.8rem; margin-bottom: 6px; }
+.ital-gomb .nev { font-size: 0.75rem; letter-spacing: 1px; color: #ffb347; margin-bottom: 4px; }
+.ital-gomb .leiras { font-size: 0.8rem; color: #666; }
+
+/* ===== VÉGE KÉPERNYŐK ===== */
+.vege-doboz {
+  background: #0e0e0e;
+  border: 2px solid #8b2500;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.vege-doboz.gyozelem {
+  border-color: #ffb347;
+}
+
+.vege-doboz h2 {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.vege-doboz.vesztes h2 { color: #e06060; }
+.vege-doboz.gyozelem h2 { color: #ffb347; }
+
+.vege-doboz p {
+  color: #999;
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+/* ===== ÉRTESÍTÉS ===== */
+#értesités {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: #1a1a1a;
+  border: 1px solid #8b2500;
+  border-radius: 4px;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  z-index: 999;
+  transform: translateX(120%);
+  transition: transform 0.25s;
+  max-width: 260px;
+}
+
+#értesités.mutat { transform: translateX(0); }
+#értesités.jo { border-color: #1a5c2a; color: #60c070; }
+#értesités.rossz { border-color: #8b2500; color: #e06060; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
